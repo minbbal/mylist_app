@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '🙏Pray List',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFFCA311)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFCA311)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Pray List '),
@@ -33,12 +33,20 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String strCounter = '';
+  List<bool> is_finish = [false, true];
 
   void _incrementCounter() {
     setState(() {
       _counter++;
       strCounter = _counter.toString();
     });
+  }
+
+  void _checkUpdate(int i) {
+    setState(() {
+      is_finish[i] = !is_finish[i];
+    });
+    // print(is_finish);
   }
 
   @override
@@ -49,15 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Color(0xFFFCA311),
         title: Text(
           widget.title,
-          style:
-              TextStyle(color: Color(0xFF141414), fontWeight: FontWeight.w500),
+          style: const TextStyle(
+              color: Color(0xFF141414), fontWeight: FontWeight.w500),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: ListView(
           children: [
-            const Column(
+            Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Card(
@@ -67,9 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         ListTile(
                           leading: IconButton(
-                              onPressed: _checkUpdate,
-                              icon:
-                                  Icon(Icons.check_box_outline_blank_outlined)),
+                              onPressed: () {
+                                _checkUpdate(0);
+                              },
+                              icon: is_finish[0]
+                                  ? Icon(Icons.check_box_outlined)
+                                  : Icon(
+                                      Icons.check_box_outline_blank_outlined)),
                           title: Text(
                             'FIRST',
                             style: TextStyle(
@@ -106,8 +118,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: <Widget>[
                         ListTile(
                           leading: IconButton(
-                              onPressed: _checkUpdate,
-                              icon: Icon(Icons.check_box_outlined)),
+                              onPressed: () {
+                                _checkUpdate(1);
+                              },
+                              icon: is_finish[1]
+                                  ? Icon(Icons.check_box_outlined)
+                                  : Icon(
+                                      Icons.check_box_outline_blank_outlined)),
                           title: Text(
                             'SECOND',
                             style: TextStyle(
@@ -151,9 +168,5 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 void _test() {
-  print('t');
-}
-
-void _checkUpdate() {
   print('t');
 }
