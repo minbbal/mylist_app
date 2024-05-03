@@ -29,39 +29,59 @@ class _PrayDetailState extends State<PrayDetail> {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: 'text pray title',
-                        labelStyle: TextStyle(color: Color(0xFF14213D)),
-                        hintStyle: TextStyle(color: Color(0xFF14213D)),
-                        errorStyle: TextStyle(color: Color(0xFF14213D)),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none),
+              Flexible(
+                flex: 1,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'text pray title',
+                          labelStyle: TextStyle(color: Color(0xFF14213D)),
+                          hintStyle: TextStyle(color: Color(0xFF14213D)),
+                          errorStyle: TextStyle(color: Color(0xFF14213D)),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none),
+                    ),
                   ),
                 ),
               ),
-              Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: TextField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'text pray detail',
-                          labelStyle: TextStyle(color: Color(0xFF14213D)))),
+              Expanded(
+                flex: 10,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                    child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            // border: OutlineInputBorder(),
+                            // labelText: 'text pray detail',
+                            hintText: 'text pray detail',
+                            labelStyle: TextStyle(color: Color(0xFF14213D)),
+                            hintStyle: TextStyle(color: Color(0xFF14213D)),
+                            errorStyle: TextStyle(color: Color(0xFF14213D)),
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none)),
+                  ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextButton(onPressed: () {}, child: Text('SAVE')),
-                  TextButton(onPressed: () {}, child: Text('CANCEL')),
-                ],
+              Flexible(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextButton(onPressed: () {}, child: Text('SAVE')),
+                    TextButton(onPressed: () {}, child: Text('CANCEL')),
+                  ],
+                ),
               )
             ]),
       ),
