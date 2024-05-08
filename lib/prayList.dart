@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mylist_app/prayDetail.dart';
+// import 'package:path/path.dart';
+// import 'package:sqflite/sqflite.dart';
 
 class PrayList extends StatefulWidget {
   const PrayList({super.key, required this.title});
@@ -10,6 +12,80 @@ class PrayList extends StatefulWidget {
 }
 
 class _PrayListState extends State<PrayList> {
+  /*
+  final TextEditingController _textFieldController = TextEditingController();
+  List<Map<String, dynamic>> _dataList = [];
+
+  // 데이터베이스 초기화 및 데이터 로딩
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  // 데이터베이스 초기화
+  Future<Database> _initDB() async {
+    final dbPath = await getDatabasesPath();0
+    final path = join(dbPath, 'example.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute(
+          'CREATE TABLE example(id INTEGER PRIMARY KEY, name TEXT)',
+        );
+      },
+    );
+  }
+
+  // 데이터 로딩
+  Future<void> _loadData() async {
+    final db = await _initDB();
+    final dataList = await db.query('example');
+    setState(() {
+      _dataList = dataList;
+    });
+  }
+
+  // 데이터 추가
+  Future<void> _addData(String name) async {
+    final db = await _initDB();
+    await db.insert(
+      'example',
+      {
+        'name': name,
+      },
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    _textFieldController.clear();
+    _loadData();
+  }
+
+  // 데이터 수정
+  Future<void> _editData(int id, String name) async {
+    final db = await _initDB();
+    await db.update(
+      'example',
+      {
+        'name': name,
+      },
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    _loadData();
+  }
+
+  // 데이터 삭제
+  Future<void> _deleteData(int id) async {
+    final db = await _initDB();
+    await db.delete(
+      'example',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+    _loadData();
+  }
+*/
   int _counter = 0;
   String strCounter = '';
   List<bool> is_finish = [false, true];
