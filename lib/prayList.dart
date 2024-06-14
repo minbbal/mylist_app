@@ -104,17 +104,41 @@ class _PrayListState extends State<PrayList> {
     // print(is_finish);
   }
 
-  void _test(String title) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => PrayDetail(
-              title: '${title}',
-            )));
-    // Navigator.of(context).pushAndRemoveUntil(
-    //     MaterialPageRoute(
-    //         builder: (context) => const PrayList(
-    //               title: 'main',
-    //             )),
-    //     (route) => false);
+  void _test(String title, bool isDel) {
+    if (isDel) {
+      _showDialog(title);
+    } else {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PrayDetail(
+                title: '${title}',
+              )));
+      // Navigator.of(context).pushAndRemoveUntil(
+      //     MaterialPageRoute(
+      //         builder: (context) => const PrayList(
+      //               title: 'main',
+      //             )),
+      //     (route) => false);
+    }
+  }
+
+  Future<Future<String?>> _showDialog(String listName) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('${listName} 삭제'),
+        content: const Text('리스트를 삭제하시겠습니까?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('아니오'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('네'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -167,14 +191,14 @@ class _PrayListState extends State<PrayList> {
                             TextButton(
                               child: const Text('EDIT'),
                               onPressed: () {
-                                _test('FIRST');
+                                _test('FIRST', false);
                               },
                             ),
                             SizedBox(width: 8),
                             TextButton(
                               child: const Text('DELETE'),
                               onPressed: () {
-                                _test('FIRST');
+                                _test('FIRST', true);
                               },
                             ),
                             SizedBox(width: 8),
@@ -214,14 +238,14 @@ class _PrayListState extends State<PrayList> {
                             TextButton(
                               child: const Text('EDIT'),
                               onPressed: () {
-                                _test('SECOND');
+                                _test('SECOND', false);
                               },
                             ),
                             SizedBox(width: 8),
                             TextButton(
                               child: const Text('DELETE'),
                               onPressed: () {
-                                _test('SECOND');
+                                _test('SECOND', true);
                               },
                             ),
                             SizedBox(width: 8),
