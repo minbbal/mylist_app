@@ -125,7 +125,7 @@ class _PrayListState extends State<PrayList> {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: const Text('${listName} 삭제'),
+        title: Text('${listName} 삭제'),
         content: const Text('리스트를 삭제하시겠습니까?'),
         actions: <Widget>[
           TextButton(
