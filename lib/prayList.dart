@@ -215,8 +215,8 @@ class _PrayListState extends State<PrayList> {
                       // 값을 정상적으로 받아올 경우
                       else {
                         return Text(
-                          'Button tapped ${snapshot.data} time${snapshot.data == 1 ? '' : 's'}.\n\n'
-                          'This should persist across restarts.',
+                          'Button tapped ${snapshot.data} time${snapshot.data == 1 ? '' : 's'}.\n'
+                          'test',
                         );
                       }
                     },
