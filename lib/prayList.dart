@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:mylist_app/prayDetail.dart';
-// import 'package:path/path.dart';
-// import 'package:sqflite/sqflite.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayList extends StatefulWidget {
   const PrayList({super.key, required this.title});
@@ -12,90 +12,34 @@ class PrayList extends StatefulWidget {
 }
 
 class _PrayListState extends State<PrayList> {
-  /*
-  final TextEditingController _textFieldController = TextEditingController();
-  List<Map<String, dynamic>> _dataList = [];
+  // shared preference 인스턴스 생성
+  Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
+  late Future<int> _prefs_count;
 
-  // 데이터베이스 초기화 및 데이터 로딩
+  // 플로팅 액션 버튼 클릭 이벤트
+  Future<void> _incrementCounter() async {
+    final SharedPreferences prefs = await _prefs;
+    // counter 값이 존재하지 않으면 0으로 저장
+    final int counter = (prefs.getInt('counter') ?? 0) + 1;
+
+    // 앱의 상태 변경, 클릭시 카운트 +1
+    setState(() {
+      _prefs_count = prefs.setInt('counter', counter).then((bool success) {
+        return counter;
+      });
+    });
+  }
+
+  // 상태 위젯 초기화
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _prefs_count =
+        _prefs.then((SharedPreferences prefs) => prefs.getInt('counter') ?? 0);
   }
 
-  // 데이터베이스 초기화
-  Future<Database> _initDB() async {
-    final dbPath = await getDatabasesPath();0
-    final path = join(dbPath, 'example.db');
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute(
-          'CREATE TABLE example(id INTEGER PRIMARY KEY, name TEXT)',
-        );
-      },
-    );
-  }
-
-  // 데이터 로딩
-  Future<void> _loadData() async {
-    final db = await _initDB();
-    final dataList = await db.query('example');
-    setState(() {
-      _dataList = dataList;
-    });
-  }
-
-  // 데이터 추가
-  Future<void> _addData(String name) async {
-    final db = await _initDB();
-    await db.insert(
-      'example',
-      {
-        'name': name,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    _textFieldController.clear();
-    _loadData();
-  }
-
-  // 데이터 수정
-  Future<void> _editData(int id, String name) async {
-    final db = await _initDB();
-    await db.update(
-      'example',
-      {
-        'name': name,
-      },
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    _loadData();
-  }
-
-  // 데이터 삭제
-  Future<void> _deleteData(int id) async {
-    final db = await _initDB();
-    await db.delete(
-      'example',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    _loadData();
-  }
-*/
-  int _counter = 0;
   String strCounter = '';
   List<bool> is_finish = [false, true];
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-      strCounter = _counter.toString();
-    });
-  }
 
   void _checkUpdate(int i) {
     setState(() {
@@ -254,6 +198,29 @@ class _PrayListState extends State<PrayList> {
                       ],
                     ),
                   ),
+                  Card(
+                      child: FutureBuilder<int>(
+                    future: _prefs_count,
+                    // AsyncSnapshot : 완료, 오류, 결과 등의 상태 정보 포함
+                    builder:
+                        (BuildContext context, AsyncSnapshot<int> snapshot) {
+                      // 값을 받아오지 못할 경우
+                      if (snapshot.connectionState != ConnectionState.done) {
+                        return const CircularProgressIndicator();
+                      }
+                      // 에러 발생할 경우
+                      if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      // 값을 정상적으로 받아올 경우
+                      else {
+                        return Text(
+                          'Button tapped ${snapshot.data} time${snapshot.data == 1 ? '' : 's'}.\n\n'
+                          'This should persist across restarts.',
+                        );
+                      }
+                    },
+                  ))
                 ]),
           ],
         ),
